@@ -17,7 +17,9 @@
         'data-tooltip': movie.title
       });
 
-      $title.tooltip({ delay: 50 }).text(movie.title);
+      $title.tooltip({
+        delay: 50
+      }).text(movie.title);
 
       const $poster = $('<img>').addClass('poster');
 
@@ -55,6 +57,44 @@
       $('.modal-trigger').leanModal();
     }
   };
-
   // ADD YOUR CODE HERE
+  $('#search').attr('required')
+  let x = $("#search").prop('required')
+  console.log(x)
+
+  let apiBaseSearchURL = "https://omdb-api.now.sh/?s="
+  let movieSearch = $("#search")
+
+  $(".btn-large").click((e) => {
+
+    e.preventDefault()
+    movies.splice(0)
+
+    movieSearch = $("#search").val()
+    let requestURL = apiBaseSearchURL.concat(movieSearch)
+    goToMovieSearch(requestURL)
+  })
+// get movies from API
+  const goToMovieSearch = (requestURL) => {
+    fetch(requestURL).then((response) => {
+      return response.json()
+    }).then((data) => {
+      makeMovieObj(data)
+    }).catch(() => {
+      console.log("Chuck Norris was here")
+    })
+  }
+// change API data into a movie object
+  const makeMovieObj = (data) => {
+      data.Search.map((i) => {
+        let movie = {
+          'id': i.imdbID,
+          'poster': i.Poster,
+          'title': i.Title,
+          'year': i.Year
+        }
+        movies.push(movie)
+      })
+    renderMovies()
+  }
 })();
