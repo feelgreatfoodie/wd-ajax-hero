@@ -17,9 +17,7 @@
         'data-tooltip': movie.title
       });
 
-      $title.tooltip({
-        delay: 50
-      }).text(movie.title);
+      $title.tooltip({ delay: 50 }).text(movie.title);
 
       const $poster = $('<img>').addClass('poster');
 
@@ -57,15 +55,14 @@
       $('.modal-trigger').leanModal();
     }
   };
+
   // ADD YOUR CODE HERE
-  $('#search').attr('required')
-  let x = $("#search").prop('required')
-  console.log(x)
+  $('#search').attr('required', true)
 
   let apiBaseSearchURL = "https://omdb-api.now.sh/?s="
   let movieSearch = $("#search")
 
-  $(".btn-large").click((e) => {
+  $("form").submit((e) => {
 
     e.preventDefault()
     movies.splice(0)
